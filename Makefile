@@ -6,40 +6,34 @@
 #
 
 PORTNAME=	ruby-enterprise
-PORTVERSION=	1.8.7.20090928
+PORTVERSION=	1.8.6.20090610
 PORTREVISION=	1
 PORTEPOCH=	${RUBY_PORTEPOCH}
 CATEGORIES=	lang ruby ipv6
-MASTER_SITES=		http://rubyforge.org/frs/download.php/64475
-DISTNAME=	${RUBY_DISTNAME}
+MASTER_SITES=	http://files.rubyforge.vm.bytemark.co.uk/emm-ruby/
+DISTNAME=	ruby-enterprise-1.8.6-20090610
 DIST_SUBDIR=	ruby
 
 MAINTAINER=	stas@FreeBSD.org
 COMMENT?=	An object-oriented interpreted scripting language
 
 GNU_CONFIGURE=	yes
-WRKSRC=		${RUBY_WRKSRC}
 CONFIGURE_ARGS=	${RUBY_CONFIGURE_ARGS} \
-		--enable-shared --with-openssl-include=${OPENSSLINC}
+		--enable-shared
+CFLAGS= 	-g -Os -fno-stack-protector
 USE_OPENSSL=	yes
 USE_LDCONFIG=	yes
 USE_AUTOTOOLS=	aclocal:110 autoconf:262
 ACLOCAL_ARGS=	-I ${LOCALBASE}/share/aclocal
 AUTOMAKE_ARGS=	--add-missing
 
-WRKSRC=		${WRKDIR}/${PORTNAME}-${RUBY_DISTVERSION}
+WRKSRC=		${WRKDIR}/${DISTNAME}/source
 
 RUBY_VER=		1.8
-USE_BZIP2=		yes
 USE_RUBY=		yes
 RUBY_NO_BUILD_DEPENDS=	yes
 RUBY_NO_RUN_DEPENDS=	yes
 _RUBY_SYSLIBDIR=	${PREFIX}/lib
-
-OPTIONS=	ONIGURUMA "Build with oniguruma regular expressions lib" off \
-		IPV6 "Enable IPv6 support" on \
-		RDOC "Build and install Rdoc indexes" on \
-		DEBUG "Compile-in debug info" off
 
 .include <bsd.port.pre.mk>
 
